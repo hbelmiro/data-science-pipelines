@@ -15,6 +15,11 @@
 package main
 
 import (
+	"net/http"
+	_ "net/http/pprof"
+)
+
+import (
 	"flag"
 	"strings"
 	"time"
@@ -42,6 +47,10 @@ var (
 
 func main() {
 	flag.Parse()
+
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
 
 	// set up signals so we handle the first shutdown signal gracefully
 	stopCh := signals.SetupSignalHandler()
