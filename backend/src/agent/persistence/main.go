@@ -16,6 +16,7 @@ package main
 
 import (
 	"flag"
+	"net/http"
 	"time"
 
 	"github.com/kubeflow/pipelines/backend/src/agent/persistence/client"
@@ -70,6 +71,10 @@ const (
 
 func main() {
 	flag.Parse()
+
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6062", nil))
+	}()
 
 	// set up signals so we handle the first shutdown signal gracefully
 	stopCh := signals.SetupSignalHandler()
