@@ -14,6 +14,8 @@
 
 package main
 
+import _ "net/http/pprof"
+
 import (
 	"flag"
 	"net/http"
@@ -73,7 +75,7 @@ func main() {
 	flag.Parse()
 
 	go func() {
-		log.Println(http.ListenAndServe("localhost:6062", nil))
+		log.Println(http.ListenAndServe("localhost:6061", nil))
 	}()
 
 	// set up signals so we handle the first shutdown signal gracefully
