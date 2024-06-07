@@ -35,7 +35,7 @@ jobs:
       - name: Run initialization tests
         working-directory: ./test
 #        run: go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
-        run: pwd
+        run: ls -l
 #      - name: Collect test results
 #        if: always()
 #        uses: actions/upload-artifact@v4
