@@ -15,7 +15,6 @@
 package test
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"testing"
@@ -41,7 +40,8 @@ import (
 
 func WaitForReady(namespace string, initializeTimeout time.Duration) error {
 	operation := func() error {
-		response, err := http.Get(fmt.Sprintf("http://ml-pipeline.%s.svc.cluster.local:8888/apis/v1beta1/healthz", namespace))
+		//response, err := http.Get(fmt.Sprintf("http://ml-pipeline.%s.svc.cluster.local:8888/apis/v1beta1/healthz", namespace))
+		response, err := http.Get("http://ml-pipeline-kubeflow.apps.hbelmiro-2.dev.datahub.redhat.com")
 		if err != nil {
 			return err
 		}
