@@ -27,10 +27,7 @@ C_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$C_DIR" ]]; then C_DIR="$PWD"; fi
 source "${C_DIR}/helper-functions.sh"
 
-POD_NAME=$(kubectl get pod -n kubeflow -l app=ml-pipeline -o json | jq -r '.items[] | .metadata.name ')
-kubectl port-forward -n "$KUBEFLOW_NS" "$POD_NAME" 8888:8888 2>&1 > /dev/null &
-# wait for the port-forward
-sleep 5
+./forward_api_port.sh -q "$KUBEFLOW_NS"
 
 if [ -n "$TEST_SCRIPT" ]; then
   source "${C_DIR}/${TEST_SCRIPT}"
