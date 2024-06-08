@@ -56,7 +56,6 @@ class SampleTest(object):
         self._test_name = test_name
         self._results_gcs_dir = results_gcs_dir
         # Capture the first segment after gs:// as the project name.
-        self._bucket_name = results_gcs_dir.split('/')[2]
         self._target_image_prefix = target_image_prefix
         self._namespace = namespace
         self._host = host
@@ -70,9 +69,9 @@ class SampleTest(object):
                     kubernetes.config.load_kube_config()
 
                 v1 = kubernetes.client.CoreV1Api()
-                inverse_proxy_config = v1.read_namespaced_config_map(
-                    name='inverse-proxy-config', namespace=self._namespace)
-                self._host = inverse_proxy_config.data.get('Hostname')
+                # inverse_proxy_config = v1.read_namespaced_config_map(
+                #     name='inverse-proxy-config', namespace=self._namespace)
+                self._host = 'http://localhost:8888' # inverse_proxy_config.data.get('Hostname')
             except Exception as err:
                 raise RuntimeError(
                     'Failed to get inverse proxy hostname') from err
@@ -88,26 +87,6 @@ class SampleTest(object):
 
         self._sample_test_result = 'junit_Sample%sOutput.xml' % self._test_name
         self._sample_test_output = self._results_gcs_dir
-
-    def _copy_result(self):
-        """Copy generated sample test result to gcs, so that Prow can pick
-        it."""
-
-        def _upload_gcs_file(local_path: str, gcs_path: str):
-            from google.cloud import storage
-            pure_path = pathlib.PurePath(gcs_path)
-            gcs_bucket = pure_path.parts[1]
-            gcs_blob = '/'.join(pure_path.parts[2:])
-            client = storage.Client()
-            bucket = client.get_bucket(gcs_bucket)
-            blob = bucket.blob(gcs_blob)
-            blob.upload_from_filename(local_path)
-
-        print('Copy the test results to GCS %s/' % self._results_gcs_dir)
-
-        _upload_gcs_file(
-            self._sample_test_result,
-            os.path.join(self._results_gcs_dir, self._sample_test_result))
 
     def _compile(self):
 
@@ -236,7 +215,7 @@ class SampleTest(object):
             pysample_checker.run()
             pysample_checker.check()
 
-        self._copy_result()
+        # self._copy_result()
 
 
 class ComponentTest(SampleTest):
