@@ -38,6 +38,9 @@ jobs:
       - name: Run initialization tests
         working-directory: ./backend/test/initialization
         run: go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
+      - name: Run initialization tests v2
+        working-directory: ./backend/test/v2/initialization
+        run: go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
 #      - name: Collect test results
 #        if: always()
 #        uses: actions/upload-artifact@v4
