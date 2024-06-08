@@ -35,12 +35,21 @@ jobs:
         run: ./scripts/deploy/github/deploy-kfp.sh
       - name: Forward API port
         run: ./scripts/deploy/github/forward-api-port.sh kubeflow
-      - name: Run initialization tests
+      - name: Initialization tests v1
         working-directory: ./backend/test/initialization
         run: go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
-      - name: Run initialization tests v2
+      - name: Initialization tests v2
         working-directory: ./backend/test/v2/initialization
         run: go test -v ./... -namespace kubeflow -args -runIntegrationTests=true
+      - name: API integration tests v1
+        working-directory: ./backend/test/integration
+        run: go test -v ./... -namespace ${NAMESPACE} -args -runIntegrationTests=true
+      - name: API integration tests v2
+        working-directory: ./backend/test/v2/integration
+        run: go test -v ./... -namespace ${NAMESPACE} -args -runIntegrationTests=true
+      - name: Frontend integration tests
+        working-directory: ./test/frontend-integration-test
+        run: ./run_test.sh
 #      - name: Collect test results
 #        if: always()
 #        uses: actions/upload-artifact@v4
