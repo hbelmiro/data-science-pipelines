@@ -27,7 +27,7 @@ C_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$C_DIR" ]]; then C_DIR="$PWD"; fi
 source "${C_DIR}/helper-functions.sh"
 
-./forward_api_port.sh -q "$KUBEFLOW_NS"
+"${C_DIR}/forward-api-port.sh" -q "$KUBEFLOW_NS"
 
 if [ -n "$TEST_SCRIPT" ]; then
   source "${C_DIR}/${TEST_SCRIPT}"
