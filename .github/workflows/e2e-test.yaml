@@ -38,7 +38,7 @@ jobs:
         run: ./scripts/deploy/github/deploy-kfp.sh
 
       - name: Forward API port
-        run: ./scripts/deploy/github/forward-api-port.sh kubeflow
+        run: ./scripts/deploy/github/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
 
       - name: Initialization tests v1
         working-directory: ./backend/test/initialization
@@ -58,7 +58,7 @@ jobs:
 
 #      Frontend integration tests disabled while https://github.com/kubeflow/pipelines/issues/10881 is not resolved
 #      - name: Forward Frontend port
-#        run: ./scripts/deploy/github/forward-frontend-port.sh kubeflow
+#        run: ./scripts/deploy/github/forward-port.sh "kubeflow" "ml-pipeline-ui" 3000 3000
 #
 #      - name: Build frontend integration tests image
 #        working-directory: ./test/frontend-integration-test
