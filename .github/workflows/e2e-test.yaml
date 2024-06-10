@@ -56,16 +56,15 @@ jobs:
         working-directory: ./backend/test/v2/integration
         run: go test -v ./... -namespace ${NAMESPACE} -args -runIntegrationTests=true
 
-#      Frontend integration tests disabled while https://github.com/kubeflow/pipelines/issues/10881 is not resolved
-#      - name: Forward Frontend port
-#        run: ./scripts/deploy/github/forward-port.sh "kubeflow" "ml-pipeline-ui" 3000 3000
-#
-#      - name: Build frontend integration tests image
-#        working-directory: ./test/frontend-integration-test
-#        run: docker build . -t kfp-frontend-integration-test:local
-#
-#      - name: Frontend integration tests
-#        run: docker run --net=host kfp-frontend-integration-test:local --remote-run true
+      - name: Forward Frontend port
+        run: ./scripts/deploy/github/forward-port.sh "kubeflow" "ml-pipeline-ui" 3000 3000
+
+      - name: Build frontend integration tests image
+        working-directory: ./test/frontend-integration-test
+        run: docker build . -t kfp-frontend-integration-test:local
+
+      - name: Frontend integration tests
+        run: docker run --net=host kfp-frontend-integration-test:local --remote-run true
 
       - name: Basic sample tests - sequential
         run: pip3 install -r ./test/sample-test/requirements.txt && pip3 install kfp~=2.0 && python3 ./test/sample-test/sample_test_launcher.py sample_test run_test --namespace kubeflow --test-name sequential --results-gcs-dir output
