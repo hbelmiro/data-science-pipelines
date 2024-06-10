@@ -17,7 +17,6 @@ It decides which test to trigger based upon the arguments provided.
 """
 
 import os
-import pathlib
 import re
 import subprocess
 
@@ -25,7 +24,6 @@ from check_notebook_results import NoteBookChecker
 from constants import BASE_DIR
 from constants import CONFIG_DIR
 from constants import DEFAULT_CONFIG
-from constants import PAPERMILL_ERR_MSG
 from constants import SCHEMA_CONFIG
 from constants import TEST_DIR
 import fire
@@ -68,17 +66,11 @@ class SampleTest(object):
                 except:
                     kubernetes.config.load_kube_config()
 
-                v1 = kubernetes.client.CoreV1Api()
-                # inverse_proxy_config = v1.read_namespaced_config_map(
-                #     name='inverse-proxy-config', namespace=self._namespace)
-                self._host = 'http://localhost:8888' # inverse_proxy_config.data.get('Hostname')
+                self._host = 'http://localhost:8888'
             except Exception as err:
                 raise RuntimeError(
                     'Failed to get inverse proxy hostname') from err
-                # Keep as comment here, we can also specify host in-cluster as the following,
-                # but we no longer use it in e2e tests, because we prefer including
-                # test coverage for inverse proxy.
-                # self._host = 'ml-pipeline.%s.svc.cluster.local:8888' % self._namespace
+
         print('KFP API host is %s' % self._host)
 
         self._is_notebook = None
@@ -214,8 +206,6 @@ class SampleTest(object):
             )
             pysample_checker.run()
             pysample_checker.check()
-
-        # self._copy_result()
 
 
 class ComponentTest(SampleTest):
