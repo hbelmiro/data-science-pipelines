@@ -68,10 +68,10 @@ jobs:
 #        run: docker run --net=host kfp-frontend-integration-test:local --remote-run true
 
       - name: Basic sample tests - sequential
-        run: pip3 install -r ./test/sample-test/requirements.txt && pip3 install kfp~=2.0 && python ./test/sample-test/sample_test_launcher.py sample_test run_test --namespace kubeflow --test-name sequential --results-gcs-dir output
+        run: pip3 install -r ./test/sample-test/requirements.txt && pip3 install kfp~=2.0 && python3 ./test/sample-test/sample_test_launcher.py sample_test run_test --namespace kubeflow --test-name sequential --results-gcs-dir output
 
       - name: Basic sample tests - exit_handler
-        run: pip3 install -r ./test/sample-test/requirements.txt && pip3 install kfp~=2.0 && python ./test/sample-test/sample_test_launcher.py sample_test run_test --namespace kubeflow --test-name exit_handler --results-gcs-dir output
+        run: pip3 install -r ./test/sample-test/requirements.txt && pip3 install kfp~=2.0 && python3 ./test/sample-test/sample_test_launcher.py sample_test run_test --namespace kubeflow --test-name exit_handler --results-gcs-dir output
 
 #      - name: Collect test results
 #        if: always()
