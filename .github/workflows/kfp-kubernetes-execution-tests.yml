@@ -43,7 +43,7 @@ jobs:
       - name: Install KFP SDK
         run: |
           python3 -m pip install --upgrade pip
-          python3 -m pip install $source_root/sdk/python
+          python3 -m pip install ./sdk/python
 
       - name: Install protobuf-compiler
         run: |
@@ -76,4 +76,4 @@ jobs:
         run: |
           export KFP_ENDPOINT="http://localhost:8888"
           export TIMEOUT_SECONDS=2700
-          pytest $source_root/test/kfp-kubernetes-execution-tests/sdk_execution_tests.py --asyncio-task-timeout $TIMEOUT_SECONDS
+          pytest ./test/kfp-kubernetes-execution-tests/sdk_execution_tests.py --asyncio-task-timeout $TIMEOUT_SECONDS
