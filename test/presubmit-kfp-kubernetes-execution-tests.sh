@@ -36,6 +36,6 @@ pip install -e $source_root/kubernetes_platform/python[dev]
 
 pip install -r $source_root/test/kfp-kubernetes-execution-tests/requirements.txt
 
-export KFP_ENDPOINT="https://$(curl https://raw.githubusercontent.com/kubeflow/testing/master/test-infra/kfp/endpoint)"
+export KFP_ENDPOINT="http://localhost:8888"
 export TIMEOUT_SECONDS=2700
 pytest $source_root/test/kfp-kubernetes-execution-tests/sdk_execution_tests.py --asyncio-task-timeout $TIMEOUT_SECONDS
