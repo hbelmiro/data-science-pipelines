@@ -37,8 +37,11 @@ clean-go:
 
 # Generate Python package.
 .PHONY: python
-python: proto/kubernetes_executor_config.proto
-	python3 python/generate_proto.py && cd python && python3 setup.py bdist_wheel
+python:
+	proto/kubernetes_executor_config.proto
+	python3 python/generate_proto.py
+	cd python
+	python3 setup.py bdist_wheel
 
 # Delete all generated Python packages
 .PHONY: clean-python
