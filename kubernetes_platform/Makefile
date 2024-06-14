@@ -38,7 +38,7 @@ clean-go:
 # Generate Python package.
 .PHONY: python
 python: proto/kubernetes_executor_config.proto
-	set -x; python3 python/generate_proto.py
+	python3 python/generate_proto.py --experimental_allow_proto3_optional
 	cd python
 	python3 setup.py bdist_wheel
 
