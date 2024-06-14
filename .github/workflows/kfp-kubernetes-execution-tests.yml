@@ -60,6 +60,8 @@ jobs:
       - name: Generate kfp-kubernetes proto files from source
         run: |
           pushd "./kubernetes_platform"
+          pip3 install wheel
+          pip freeze
           make clean python
           popd
 
