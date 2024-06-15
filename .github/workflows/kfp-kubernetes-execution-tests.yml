@@ -52,7 +52,7 @@ jobs:
 
       - name: Install kfp-pipeline-spec from source
         run: |
-          VERSION=$(protoc --version)
+          VERSION=$(which protoc)
           echo "hhh-> ${VERSION}"
           
           pip3 install wheel==0.42.0
