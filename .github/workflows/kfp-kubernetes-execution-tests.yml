@@ -53,11 +53,9 @@ jobs:
 
       - name: Install kfp-pipeline-spec from source
         run: |
-          USR_BIN_VERSION=$(/usr/bin/protoc --version)
-          BIN_VERSION=$(/bin/protoc --version)
+          USR_BIN_VERSION=$(protoc --version)
           
-          echo "hhh USR_BIN-> ${USR_BIN_VERSION}"
-          echo "hhh BIN-> ${BIN_VERSION}"
+          echo "hhh-> ${USR_BIN_VERSION}"
           
           pip3 install wheel==0.42.0
           pushd api
