@@ -40,16 +40,16 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Install KFP SDK
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install ./sdk/python
+#      - name: Install KFP SDK
+#        run: |
+#          python3 -m pip install --upgrade pip
+#          python3 -m pip install ./sdk/python
+
+      - name: apt-get update
+        run: sudo apt-get update
 
       - name: Install protobuf-compiler
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y protobuf-compiler
-          sudo apt-get install -y libprotoc-dev          
+        run: sudo apt-get install -y protobuf-compiler
 
       - name: Install kfp-pipeline-spec from source
         run: |
