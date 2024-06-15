@@ -52,8 +52,9 @@ jobs:
 
       - name: Install kfp-pipeline-spec from source
         run: |
+          echo "hhh-> $(protoc --version)"
+          
           pip3 install wheel==0.42.0
-          pip freeze
           pushd api
           make clean python
           popd
