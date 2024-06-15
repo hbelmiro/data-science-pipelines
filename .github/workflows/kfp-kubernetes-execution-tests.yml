@@ -52,7 +52,8 @@ jobs:
 
       - name: Install kfp-pipeline-spec from source
         run: |
-          echo "hhh-> $(protoc --version)"
+          VERSION=$(protoc --version)
+          echo "hhh-> ${VERSION}"
           
           pip3 install wheel==0.42.0
           pushd api
