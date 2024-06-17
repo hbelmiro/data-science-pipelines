@@ -35,10 +35,10 @@ jobs:
 #      - name: Forward API port
 #        run: ./scripts/deploy/github/forward-port.sh "kubeflow" "ml-pipeline" 8888 8888
 
-      - name: Set up Python 3.8
+      - name: Set up Python 3.9
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8.18'
+          python-version: '3.9'
 
       - name: Install protobuf-compiler
         working-directory: /tmp
