@@ -1,5 +1,3 @@
-name: KFP Kubernetes execution tests
-
 on:
   push:
     branches: [master]
