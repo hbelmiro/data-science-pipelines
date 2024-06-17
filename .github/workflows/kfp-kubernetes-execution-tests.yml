@@ -49,11 +49,11 @@ jobs:
         run: pip3 install wheel==0.42.0
 
       - name: Install protobuf
-        run: pip3 install protobuf
+        run: pip3 install protobuf==4.25.3
 
       - name: make clean python
         working-directory: ./api
-        run: make python
+        run: make clean python
 
       - name: Install kfp-pipeline-spec from source
         run: |
