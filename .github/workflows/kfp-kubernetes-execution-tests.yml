@@ -13,7 +13,7 @@ on:
 
 jobs:
   kfp-kubernetes-execution-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,46 +40,51 @@ jobs:
         with:
           python-version: '3.8'
 
-#      - name: Install KFP SDK
+      - name: Install protobuf-compiler
+        working-directory: /tmp
+        # We can't use apt-get since it installs a version older than the needed one
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade
+          sudo apt-get install protobuf-compiler -y
+#          export PROTOC_VERSION="27.1"
+#          wget "https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip"
+#          unzip "protoc-${PROTOC_VERSION}-linux-x86_64.zip"
+#          sudo mv bin/* /usr/bin/
+
+      - name: locate proto
+        run: |
+          protoc --version
+
+#      - name: Install Wheel
+#        run: pip3 install wheel==0.42.0
+#
+#      - name: Install protobuf
+#        run: pip3 install protobuf
+#
+#      - name: make clean python
+#        working-directory: ./api
+#        run: make python
+#
+#      - name: Install kfp-pipeline-spec from source
 #        run: |
-#          python3 -m pip install --upgrade pip
-#          python3 -m pip install ./sdk/python
-
-      - name: apt-get update
-        run: sudo apt-get update
-
-#      - name: Install protobuf-compiler
-#        run: sudo apt-get install -y protobuf-compiler
-
-      - name: Install kfp-pipeline-spec from source
-        run: |
-          USR_BIN_VERSION=$(protoc --version)
-          
-          echo "hhh-> ${USR_BIN_VERSION}"
-          
-          pip3 install wheel==0.42.0
-          pushd api
-          make clean python
-          popd
-          python3 -m pip install api/v2alpha1/python
-
-      - name: Generate kfp-kubernetes proto files from source
-        run: |
-          pushd "./kubernetes_platform"
-          make clean python
-          popd
-
-      - name: Install kfp-kubernetes from source
-        run: |
-          # rust needed for transitive deps in dev extras on Python:3.12
-          sudo apt-get install rustc -y
-          pip install -e ./kubernetes_platform/python[dev]
-
-      - name: Install requirements
-        run: pip install -r ./test/kfp-kubernetes-execution-tests/requirements.txt
-
-      - name: Run tests
-        run: |
-          export KFP_ENDPOINT="http://localhost:8888"
-          export TIMEOUT_SECONDS=2700
-          pytest ./test/kfp-kubernetes-execution-tests/sdk_execution_tests.py --asyncio-task-timeout $TIMEOUT_SECONDS
+#          python3 -m pip install api/v2alpha1/python
+#
+#      - name: Generate kfp-kubernetes proto files from source
+#        working-directory: ./kubernetes_platform
+#        run: make clean python
+#
+#      - name: Install kfp-kubernetes from source
+#        run: |
+#          # rust needed for transitive deps in dev extras on Python:3.12
+#          sudo apt-get install rustc -y
+#          pip install -e ./kubernetes_platform/python[dev]
+#
+#      - name: Install requirements
+#        run: pip install -r ./test/kfp-kubernetes-execution-tests/requirements.txt
+#
+#      - name: Run tests
+#        run: |
+#          export KFP_ENDPOINT="http://localhost:8888"
+#          export TIMEOUT_SECONDS=2700
+#          pytest ./test/kfp-kubernetes-execution-tests/sdk_execution_tests.py --asyncio-task-timeout $TIMEOUT_SECONDS
