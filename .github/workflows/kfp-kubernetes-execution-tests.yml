@@ -1,3 +1,5 @@
+name: k8s execution tests
+
 on:
   push:
     branches: [master]
