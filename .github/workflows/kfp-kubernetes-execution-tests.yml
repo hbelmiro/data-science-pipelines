@@ -48,10 +48,14 @@ jobs:
         with:
           python-version: ${{matrix.python.version}}
 
+      - name: apt-get update
+        run: sudo apt-get update
+
       - name: Install protobuf-compiler
-        run: |
-          sudo apt-get update
-          sudo apt-get install protobuf-compiler -y
+        run: sudo apt-get install protobuf-compiler -y
+
+      - name: Install python3-setuptools
+        run: sudo apt-get install python3-setuptools -y
 
       - name: Install Wheel
         run: pip3 install wheel==0.42.0
@@ -59,7 +63,7 @@ jobs:
       - name: Install protobuf
         run: pip3 install protobuf==4.25.3
 
-      - name: make clean python
+      - name: Generate API proto files
         working-directory: ./api
         run: make clean python
 
