@@ -54,8 +54,10 @@ jobs:
       - name: Install protobuf-compiler
         run: sudo apt-get install protobuf-compiler -y
 
-      - name: Install python3-setuptools
-        run: sudo apt-get install python3-setuptools -y
+      - name: Install setuptools
+        run: | 
+          pip3 install setuptools
+          pip3 freeze
 
       - name: Install Wheel
         run: pip3 install wheel==0.42.0
