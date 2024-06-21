@@ -21,7 +21,7 @@ set -e
 REGISTRY="${REGISTRY:-kind-registry:5000}"
 TAG="${TAG:-latest}"
 
-docker system prune -a -f
+# docker system prune -a -f
 
 docker build -q -t "${REGISTRY}/apiserver:${TAG}" -f backend/Dockerfile . && docker push "${REGISTRY}/apiserver:${TAG}" &
 docker build -q -t "${REGISTRY}/persistenceagent:${TAG}" -f backend/Dockerfile.persistenceagent . && docker push "${REGISTRY}/persistenceagent:${TAG}" &
@@ -30,4 +30,4 @@ docker build -q -t "${REGISTRY}/scheduledworkflow:${TAG}" -f backend/Dockerfile.
 wait
 
 # clean up intermittent build caches to free up disk space
-docker system prune -a -f
+# docker system prune -a -f
