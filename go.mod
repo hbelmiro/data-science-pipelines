@@ -1,6 +1,6 @@
 module github.com/kubeflow/pipelines
 
-go 1.22.0
+go 1.22.12
 
 require (
 	github.com/Masterminds/squirrel v0.0.0-20190107164353-fa735ea14f09
@@ -237,6 +237,12 @@ replace (
 	k8s.io/component-bsae => k8s.io/component-base v0.27.16
 	k8s.io/kubernetes => k8s.io/kubernetes v1.11.1
 	sigs.k8s.io/controller-tools => sigs.k8s.io/controller-tools v0.2.9
+)
+
+// These dependencies are managed relative to project root
+replace (
+	github.com/kubeflow/pipelines/api => ./api
+	github.com/kubeflow/pipelines/kubernetes_platform => ./kubernetes_platform
 )
 
 exclude github.com/mitchellh/osext v0.0.0-20151018003038-5e2d6d41470f
