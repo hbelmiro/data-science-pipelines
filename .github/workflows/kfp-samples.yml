@@ -54,8 +54,9 @@ jobs:
 
     - name: Collect failed logs
       if: steps.tests.outcome != 'success'
-      run: | 
-        ./.github/resources/scripts/collect-logs.sh --ns kubeflow --output /tmp/tmp_pod_log.txt
+      working-directory: ${{ github.workspace }}/.github/resources/scripts
+      run: |
+        ./collect-logs.sh --ns kubeflow --output /tmp/tmp_pod_log.txt
         exit 1
 
     - name: Collect test results

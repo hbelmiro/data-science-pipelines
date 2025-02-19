@@ -83,8 +83,9 @@ jobs:
 
       - name: Collect failed logs
         if: ${{ (steps.flip-coin.outcome != 'success') || (steps.static-loop.outcome != 'success') || (steps.dynamic-loop.outcome != 'success') || (steps.use-env.outcome != 'success') || (steps.use-volume.outcome != 'success') }}
+        working-directory: ${{ github.workspace }}/.github/resources/scripts
         run: |
-          ./.github/resources/scripts/collect-logs.sh --ns kubeflow --output /tmp/tmp.log/tmp_pod_log.txt
+          ./collect-logs.sh --ns kubeflow --output /tmp/tmp.log/tmp_pod_log.txt
           exit 1
 
       - name: Collect test results

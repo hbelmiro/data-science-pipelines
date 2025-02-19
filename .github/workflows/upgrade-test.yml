@@ -62,8 +62,9 @@ jobs:
 
       - name: Collect failed logs
         if: ${{ (steps.upgrade-tests.outcome != 'success' ) || ( steps.upgrade-tests-v2.outcome != 'success' ) || ( steps.verification-tests.outcome != 'success' ) || ( steps.verification-tests-v2.outcome != 'success' )}}
+        working-directory: ${{ github.workspace }}/.github/resources/scripts
         run: |
-          ./.github/resources/scripts/collect-logs.sh --ns kubeflow --output /tmp/tmp_pod_log.txt
+          ./collect-logs.sh --ns kubeflow --output /tmp/tmp_pod_log.txt
           exit 1
 
       - name: Collect test results
