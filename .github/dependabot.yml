@@ -1,0 +1,107 @@
+version: 2
+updates:
+  # ===================
+  # Python (pip)
+  # ===================
+  - package-ecosystem: "pip"
+    directories:
+      # Main packages
+      - "/sdk/python"
+      - "/kubernetes_platform/python"
+      - "/api/v2alpha1/python"
+      - "/backend/api/v1beta1/python_http_client"
+      - "/backend/api/v2beta1/python_http_client"
+      # Backend
+      - "/backend"
+      - "/backend/metadata_writer"
+      - "/backend/src/apiserver/visualization"
+      - "/backend/src/v2/test"
+      # Other
+      - "/proxy"
+      - "/docs/sdk"
+      - "/kubernetes_platform/python/docs"
+      # CI/Test
+      - "/.github/resources/scripts/kfp-readiness"
+      - "/test/kfp-kubernetes-native-migration-tests"
+      # Note: /components/** excluded - managed separately
+    schedule:
+      interval: "daily"
+    # Disable version updates; security updates have a separate limit unaffected by this
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "python"
+    commit-message:
+      prefix: "chore(deps)"
+
+  # ===================
+  # Go
+  # ===================
+  - package-ecosystem: "gomod"
+    directories:
+      - "/"
+      - "/api"
+      - "/kubernetes_platform"
+      - "/third_party/ml-metadata"
+      - "/test/tools/project-cleaner"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "go"
+    commit-message:
+      prefix: "chore(deps)"
+
+  # ===================
+  # npm (Frontend)
+  # ===================
+  - package-ecosystem: "npm"
+    directories:
+      - "/frontend"
+      - "/frontend/server"
+      - "/frontend/mock-backend"
+      - "/test/frontend-integration-test"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "javascript"
+    commit-message:
+      prefix: "chore(deps)"
+
+  # ===================
+  # Docker
+  # ===================
+  - package-ecosystem: "docker"
+    directories:
+      # Backend
+      - "/backend"
+      - "/backend/api"
+      - "/backend/metadata_writer"
+      - "/backend/src/cache/deployer"
+      - "/backend/src/v2/test"
+      # Frontend
+      - "/frontend"
+      # Infrastructure
+      - "/proxy"
+      - "/third_party/minio"
+      - "/third_party/metadata_envoy"
+      - "/manifests/gcp_marketplace/deployer"
+      # Test/Tools
+      - "/test/frontend-integration-test"
+      - "/test/release"
+      - "/test/imagebuilder"
+      - "/test_data/sdk_compiled_pipelines/valid/critical/modelcar"
+      - "/tools/bazel_builder"
+      - "/tools/kind"
+      # Note: /components/** excluded - managed separately
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 0
+    labels:
+      - "dependencies"
+      - "docker"
+    commit-message:
+      prefix: "chore(deps)"
