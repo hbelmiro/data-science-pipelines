@@ -569,6 +569,10 @@ class PipelineTask:
     def add_node_selector_constraint(self, accelerator: str) -> 'PipelineTask':
         """Sets accelerator type to use when executing this task.
 
+        .. deprecated::
+            Use :meth:`set_accelerator_type` instead. This method is deprecated
+            and will be removed in a future release.
+
         Args:
             accelerator: The name of the accelerator, such as ``'NVIDIA_TESLA_K80'``, ``'TPU_V3'``, ``'nvidia.com/gpu'`` or ``'cloud-tpus.google.com/v3'``.
 
