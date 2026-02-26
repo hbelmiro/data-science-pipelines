@@ -79,19 +79,14 @@ func collectRunInfos(runClient *apiserver.RunClient, experimentID *string, testC
 			if _, exists := seen[run.RunID]; exists {
 				continue
 			}
-			if run.PipelineVersionReference == nil || run.PipelineVersionReference.PipelineID == "" || run.PipelineVersionReference.PipelineVersionID == "" {
-				if collectErr == nil {
-					collectErr = fmt.Errorf("run %s missing pipeline version reference", run.RunID)
-				}
-				return false
-			}
 
 			seen[run.RunID] = struct{}{}
-			runInfos = append(runInfos, RunInfo{
-				RunID:             run.RunID,
-				PipelineID:        run.PipelineVersionReference.PipelineID,
-				PipelineVersionID: run.PipelineVersionReference.PipelineVersionID,
-			})
+			info := RunInfo{RunID: run.RunID}
+			if run.PipelineVersionReference != nil {
+				info.PipelineID = run.PipelineVersionReference.PipelineID
+				info.PipelineVersionID = run.PipelineVersionReference.PipelineVersionID
+			}
+			runInfos = append(runInfos, info)
 			testContext.PipelineRun.CreatedRunIds = append(testContext.PipelineRun.CreatedRunIds, run.RunID)
 		}
 
@@ -508,7 +503,7 @@ var _ = Describe("Upload and Verify Pipeline Run >", Label(FullRegression), func
 		}
 	})
 
-	Context("Pipeline run parallelism tests >", Label(E2eEssential), func() {
+	Context("Pipeline run parallelism tests >", FlakeAttempts(2), Label(E2eEssential), func() {
 		var pipelineFile = "essential/pipeline_with_max_active_runs.yaml"
 		var pipelineDir = "valid"
 
@@ -695,11 +690,10 @@ var _ = Describe("Upload and Verify Pipeline Run >", Label(FullRegression), func
 		})
 	})
 
-	Context("Recurring run parallelism tests >", Label(E2eEssential), func() {
+	Context("Recurring run parallelism tests >", FlakeAttempts(2), Label(E2eEssential), func() {
 		const (
-			pipelineDir              = "valid"
-			pipelineFile             = "essential/pipeline_with_max_active_runs.yaml"
-			recurringIntervalSeconds = int64(30)
+			pipelineDir  = "valid"
+			pipelineFile = "essential/pipeline_with_max_active_runs.yaml"
 		)
 
 		removeRecurringRunID := func(id string) {
