@@ -133,6 +133,9 @@ jobs:
             TEST_LABEL=${{ inputs.test_label }}
             NAMESPACE=${{ inputs.namespace }}
           fi
+          if [ "$TEST_LABEL" == "E2EParallelism" ]; then
+            NUMBER_OF_NODES=2
+          fi
 
           {
             echo "NUMBER_OF_NODES=$NUMBER_OF_NODES"
