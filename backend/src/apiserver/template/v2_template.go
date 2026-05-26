@@ -149,9 +149,7 @@ func (t *V2Spec) ScheduledWorkflow(modelJob *model.Job, ownerReferences []metav1
 	if modelJob.Namespace != "" {
 		executionSpec.SetExecutionNamespace(modelJob.Namespace)
 	}
-	if executionSpec.ServiceAccount() == "" {
-		setDefaultServiceAccount(executionSpec, modelJob.ServiceAccount)
-	}
+	setDefaultServiceAccount(executionSpec, modelJob.ServiceAccount)
 	// Disable istio sidecar injection if not specified
 	executionSpec.SetAnnotationsToAllTemplatesIfKeyNotExist(util.AnnotationKeyIstioSidecarInject, util.AnnotationValueIstioSidecarInjectDisabled)
 	parameters, err := StringMapToCRDParameters(string(modelJob.RuntimeConfig.Parameters))
