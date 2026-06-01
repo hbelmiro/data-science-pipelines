@@ -20,8 +20,6 @@ ARG SOURCE_CODE
 
 USER root
 
-RUN dnf install -y cmake clang openssl-1:3.5.1-4.el9_7
-
 
 COPY ${SOURCE_CODE}/go.mod ./
 COPY ${SOURCE_CODE}/go.sum ./
